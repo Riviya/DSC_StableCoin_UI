@@ -1,0 +1,2 @@
+export const DSCEngineAddress = "0xfF303a5Cac35A27a845329761FAc4BE761050A0f";
+export const DSCAddress = "0xB5Aaf885eA19e897dE253a47503127Be8BaDd466";

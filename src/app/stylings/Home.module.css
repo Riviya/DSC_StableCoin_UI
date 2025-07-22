@@ -1,0 +1,520 @@
+/* Home.module.css */
+
+.dashboard {
+    min-height: 100vh;
+    background: linear-gradient(110deg, #08041d 80%, #041a5fd1 100%);
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    padding: 2rem;
+}
+
+.toastContainer {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.toast {
+    backdrop-filter: blur(10px);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    min-width: 300px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: slideIn 0.3s ease;
+}
+
+.toastSuccess {
+    background: linear-gradient(110deg, #000000 80%, #05e942d1 100%);
+    border-left: 4px solid #1aff00;
+}
+
+.toastError {
+    background: linear-gradient(110deg, #000000 80%, #ff3c6a 100%);
+    border-left: 4px solid #ff3c6a;
+}
+
+.toastContent {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.toastSuccess .toastContent {
+    color: #00ffe7;
+}
+
+.toastError .toastContent {
+    color: #ff3c6a;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: 3rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #00ffe7, #0080ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #8892b0;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.infoGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.infoCard {
+    background: linear-gradient(135deg, #5c0762, #000a13);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(21, 21, 21, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.infoCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.infoHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: #bdc0ca;
+    font-size: 0.9rem;
+}
+
+.infoValue {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.infoDesc {
+    font-size: 0.9rem;
+    color: #8892b0;
+}
+
+.actionGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.actionCard {
+    background: linear-gradient(135deg, #49034e34, #000a13);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(10, 132, 203, 0.46);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+}
+
+.actionCardLarge {
+    grid-column: span 2;
+}
+
+.actionCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.actionHeader {
+    margin-bottom: 1.5rem;
+}
+
+.actionHeader h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: #00ffe7;
+}
+
+.actionHeader p {
+    color: #8892b0;
+    font-size: 0.9rem;
+}
+
+.formGroup {
+    margin-bottom: 1rem;
+}
+
+.formRow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.formGroup label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #8892b0;
+    font-size: 0.9rem;
+}
+
+.formInput {
+    width: 100%;
+    padding: 0.875rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.formInput:focus {
+    outline: none;
+    border-color: #00ffe7;
+    box-shadow: 0 0 0 2px rgba(0, 255, 231, 0.2);
+}
+
+/* Enhanced amount input container */
+.amountInputContainer {
+    position: relative;
+    width: 100%;
+}
+
+.amountInputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.amountInput {
+    width: 100%;
+    padding: 0.875rem;
+    padding-right: 4rem;
+    /* Space for max button */
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.amountInput:focus {
+    outline: none;
+    border-color: #00ffe7;
+    box-shadow: 0 0 0 2px rgba(0, 255, 231, 0.2);
+}
+
+.maxButton {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, #00ffe7, #0080ff);
+    color: #000;
+    border: none;
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.maxButton:hover {
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 255, 231, 0.4);
+}
+
+.maxButton:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.maxButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: translateY(-50%);
+}
+
+.availableAmount {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #8892b0;
+}
+
+.availableLabel {
+    color: #8892b0;
+}
+
+.availableValue {
+    color: #00ffe7;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.availableTokenSymbol {
+    color: #00ffe7;
+    font-weight: 700;
+}
+
+.availableLoading {
+    color: #8892b0;
+    font-style: italic;
+}
+
+.availableError {
+    color: #ff3c6a;
+    font-size: 0.8rem;
+}
+
+/* Alternative compact layout for available amount */
+.availableAmountCompact {
+    text-align: right;
+    margin-top: 0.25rem;
+    font-size: 0.8rem;
+}
+
+.availableAmountCompact .availableLabel {
+    color: #8892b0;
+    margin-right: 0.5rem;
+}
+
+.availableAmountCompact .availableValue {
+    color: #00ffe7;
+    font-weight: 600;
+}
+
+.tokenSelector {
+    position: relative;
+    width: 100%;
+}
+
+.tokenSelectorButton {
+    width: 100%;
+    padding: 0.875rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tokenSelectorButton:hover {
+    border-color: #00ffe7;
+}
+
+.tokenDisplay {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.tokenIcon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00ffe7, #0080ff);
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.chevron {
+    transition: transform 0.3s ease;
+}
+
+.chevronRotate {
+    transform: rotate(180deg);
+}
+
+.tokenDropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    margin-top: 0.5rem;
+    z-index: 100;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.tokenOption {
+    width: 100%;
+    padding: 0.875rem;
+    background: transparent;
+    border: none;
+    color: white;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.tokenOption:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.tokenSymbol {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.tokenName {
+    font-size: 0.8rem;
+    color: #8892b0;
+}
+
+.actionButton {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, #00ffe7, #0080ff);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+}
+
+.actionButton:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 255, 231, 0.3);
+}
+
+.actionButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dashboard {
+        padding: 1rem;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .walletConnected {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .infoGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .actionGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .actionCardLarge {
+        grid-column: span 1;
+    }
+
+    .formRow {
+        grid-template-columns: 1fr;
+    }
+
+    .toast {
+        min-width: 280px;
+    }
+
+    .maxButton {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.75rem;
+    }
+
+    .availableAmount {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .toastContainer {
+        left: 1rem;
+        right: 1rem;
+    }
+
+    .toast {
+        min-width: auto;
+    }
+
+    .amountInput {
+        padding-right: 3.5rem;
+    }
+
+    .maxButton {
+        right: 0.5rem;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.7rem;
+    }
+
+    .availableAmount {
+        font-size: 0.8rem;
+    }
+}

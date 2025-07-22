@@ -1,0 +1,57 @@
+.customHeader {
+    background: linear-gradient(135deg, #0c068b86, #300441af, #09055386);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+
+}
+
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+
+}
+
+.logoIcon {
+    background: linear-gradient(135deg, #c10d6d, #0080ff);
+    color: #000;
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.logoText {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1.1;
+}
+
+.logoTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #c10d6d, #0080ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.logoSubtitle {
+    font-size: 0.95rem;
+    color: #8892b0;
+    margin: 0;
+    margin-top: 0.125rem;
+    white-space: nowrap;
+}
