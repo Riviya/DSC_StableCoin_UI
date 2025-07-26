@@ -1,0 +1,29 @@
+specVersion: 1.3.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: DSCEngine
+    network: sepolia
+    source:
+      address: "0xfF303a5Cac35A27a845329761FAc4BE761050A0f"
+      abi: DSCEngine
+      startBlock: 8748571
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.9
+      language: wasm/assemblyscript
+      entities:
+        - CollateralDeposited
+        - CollateralRedeemed
+      abis:
+        - name: DSCEngine
+          file: ./abis/DSCEngine.json
+      eventHandlers:
+        - event: CollateralDeposited(indexed address,indexed address,uint256)
+          handler: handleCollateralDeposited
+        - event: CollateralRedeemed(indexed address,indexed address,uint256,indexed address)
+          handler: handleCollateralRedeemed
+      file: ./src/dsc-engine.ts
