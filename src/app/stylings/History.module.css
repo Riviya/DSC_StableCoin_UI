@@ -1,0 +1,938 @@
+/* ==========================================================================
+   TransactionHistory.module.css - Refactored with Improved Filters
+   ========================================================================== */
+
+/* ==========================================================================
+   BASE STYLES
+   ========================================================================== */
+
+.transactionPage {
+    min-height: 100vh;
+    background: linear-gradient(110deg, #08041d 80%, #041a5fd1 100%);
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    padding: 2rem;
+}
+
+/* Custom scrollbar */
+.transactionPage ::-webkit-scrollbar {
+    width: 6px;
+}
+
+.transactionPage ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.transactionPage ::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #00ffe7, #0080ff);
+    border-radius: 3px;
+}
+
+.transactionPage ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #0080ff, #00ffe7);
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+
+.hero {
+    text-align: center;
+    margin-bottom: 3rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #00ffe7, #0080ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #8892b0;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ==========================================================================
+   FILTERS SECTION - REFACTORED
+   ========================================================================== */
+
+.filtersSection {
+    margin-bottom: 3rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.filtersContainer {
+    background: linear-gradient(135deg, #5c0762, #000a13);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(21, 21, 21, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Top Row - Toggle and Actions */
+.filtersTopRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.toggleSection {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.filterActions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* Middle Row - Type Filters */
+.filtersMiddleRow {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.filterLabel {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #00ffe7;
+    margin: 0;
+}
+
+.typeFilters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+/* Bottom Row - Search and Date */
+.filtersBottomRow {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1.5rem;
+    align-items: end;
+}
+
+.searchSection {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.dateSection {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 300px;
+}
+
+/* Toggle Switch */
+.toggleContainer {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.toggleInput {
+    display: none;
+}
+
+.toggleSlider {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.toggleSlider::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 18px;
+    height: 18px;
+    background: #8892b0;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.toggleInput:checked+.toggleSlider {
+    background: linear-gradient(135deg, #00ffe7, #0080ff);
+    border-color: #00ffe7;
+}
+
+.toggleInput:checked+.toggleSlider::before {
+    transform: translateX(20px);
+    background: white;
+}
+
+.toggleLabel {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #bdc0ca;
+    font-weight: 500;
+}
+
+/* Type Filters */
+.typeFilterBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #bdc0ca;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.typeFilterBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+}
+
+.typeFilterBtn.active {
+    background: var(--type-color, #00ffe7);
+    color: white;
+    border-color: var(--type-color, #00ffe7);
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 255, 231, 0.3);
+}
+
+.typeIcon {
+    font-size: 1rem;
+}
+
+/* Search Input */
+.searchInput {
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.searchInput:focus {
+    outline: none;
+    border-color: #00ffe7;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 2px rgba(0, 255, 231, 0.1);
+}
+
+.searchInput::placeholder {
+    color: #8892b0;
+}
+
+/* Date Range */
+.dateRange {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.dateInput {
+    flex: 1;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.dateInput:focus {
+    outline: none;
+    border-color: #00ffe7;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 2px rgba(0, 255, 231, 0.1);
+}
+
+.dateSeparator {
+    color: #8892b0;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+/* Filter Actions */
+.refreshBtn,
+.exportBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    border: none;
+}
+
+.refreshBtn {
+    background: linear-gradient(135deg, #00ffe7, #0080ff);
+    color: white;
+}
+
+.refreshBtn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 255, 231, 0.3);
+}
+
+.refreshBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.exportBtn {
+    background: rgba(255, 255, 255, 0.1);
+    color: #bdc0ca;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.exportBtn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.exportBtn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* ==========================================================================
+   STATS SECTION
+   ========================================================================== */
+
+.statsSection {
+    margin-bottom: 3rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.statCard {
+    background: linear-gradient(135deg, #5c0762, #000a13);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(21, 21, 21, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.statCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.statHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: #bdc0ca;
+    font-size: 0.9rem;
+}
+
+.statValue {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #00ffe7;
+}
+
+.statDesc {
+    font-size: 0.9rem;
+    color: #8892b0;
+}
+
+/* ==========================================================================
+   TRANSACTIONS SECTION
+   ========================================================================== */
+
+.transactionsSection {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.transactionsContainer {
+    background: linear-gradient(135deg, #49034e34, #000a13);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(10, 132, 203, 0.46);
+    border-radius: 16px;
+    padding: 2rem;
+}
+
+.transactionsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.sectionTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #00ffe7;
+    margin: 0;
+}
+
+.resultsCount {
+    color: #8892b0;
+    font-size: 0.9rem;
+}
+
+/* Transactions List */
+.transactionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.transactionRow {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.transactionRow:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(0, 255, 231, 0.3);
+    transform: translateY(-2px);
+}
+
+.userTransaction {
+    border-color: rgba(0, 255, 231, 0.5);
+    background: rgba(0, 255, 231, 0.05);
+}
+
+.transactionContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.transactionMain {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+}
+
+.transactionIcon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.typeEmoji {
+    font-size: 1.5rem;
+}
+
+.transactionDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.transactionType {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.typeName {
+    font-weight: 600;
+    color: white;
+    font-size: 1rem;
+}
+
+.direction {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.direction.outgoing {
+    background: rgba(255, 107, 107, 0.2);
+    color: #ff6b6b;
+}
+
+.direction.incoming {
+    background: rgba(81, 207, 102, 0.2);
+    color: #51cf66;
+}
+
+.transactionHash {
+    margin: 0.25rem 0;
+}
+
+.hashLink {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #00ffe7;
+    text-decoration: none;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+}
+
+.hashLink:hover {
+    color: #0080ff;
+    text-decoration: underline;
+}
+
+.transactionAddresses {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: #8892b0;
+    flex-wrap: wrap;
+}
+
+.addressLabel {
+    font-weight: 500;
+}
+
+.address {
+    font-family: 'Courier New', monospace;
+    color: #bdc0ca;
+}
+
+.transactionMeta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+    text-align: right;
+}
+
+.transactionValue {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25rem;
+}
+
+.primaryValue {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+}
+
+.usdValue {
+    font-size: 0.9rem;
+    color: #8892b0;
+}
+
+.transactionTime {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.8rem;
+    color: #8892b0;
+}
+
+/* ==========================================================================
+   STATUS & EMPTY STATES
+   ========================================================================== */
+
+/* Status Icons */
+.statusConfirmed {
+    color: #51cf66;
+}
+
+.statusPending {
+    color: #ffd43b;
+    animation: spin 2s linear infinite;
+}
+
+.statusFailed {
+    color: #ff6b6b;
+}
+
+/* Empty State */
+.emptyState {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #8892b0;
+}
+
+.emptyIcon {
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.emptyState h3 {
+    color: #bdc0ca;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.emptyState p {
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* ==========================================================================
+   SKELETON LOADING
+   ========================================================================== */
+
+.skeletonBox {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 25%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.1) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+    border-radius: 4px;
+}
+
+.skeletonIcon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+}
+
+.skeletonText {
+    height: 1.2rem;
+    width: 200px;
+    margin-bottom: 0.5rem;
+}
+
+.skeletonTextSmall {
+    height: 1rem;
+    width: 150px;
+}
+
+.skeletonValue {
+    height: 1.2rem;
+    width: 120px;
+    margin-bottom: 0.5rem;
+}
+
+.skeletonTime {
+    height: 0.9rem;
+    width: 100px;
+}
+
+/* ==========================================================================
+   PAGINATION
+   ========================================================================== */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.paginationBtn {
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #bdc0ca;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.paginationBtn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    transform: translateY(-1px);
+}
+
+.paginationBtn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.paginationInfo {
+    color: #8892b0;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+
+.spinning {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+    .filtersTopRow {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .toggleSection {
+        justify-content: center;
+    }
+
+    .filterActions {
+        justify-content: center;
+    }
+
+    .filtersBottomRow {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .dateSection {
+        min-width: auto;
+    }
+
+    .transactionContent {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .transactionMeta {
+        align-items: flex-start;
+        text-align: left;
+    }
+}
+
+@media (max-width: 768px) {
+    .transactionPage {
+        padding: 1rem;
+    }
+
+    .title {
+        font-size: 2.5rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .filtersContainer {
+        padding: 1.5rem;
+    }
+
+    .filtersTopRow {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filterActions {
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .typeFilters {
+        justify-content: center;
+    }
+
+    .statsGrid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .transactionsContainer {
+        padding: 1.5rem;
+    }
+
+    .transactionsHeader {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+
+    .transactionRow {
+        padding: 1.25rem;
+    }
+
+    .transactionMain {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .transactionIcon {
+        align-self: flex-start;
+    }
+
+    .transactionAddresses {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+
+    .dateRange {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .pagination {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .transactionPage {
+        padding: 0.75rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .filtersContainer {
+        padding: 1rem;
+    }
+
+    .typeFilters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .typeFilterBtn {
+        justify-content: center;
+    }
+
+    .filterActions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .refreshBtn,
+    .exportBtn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .transactionRow {
+        padding: 1rem;
+    }
+
+    .transactionIcon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .typeEmoji {
+        font-size: 1.2rem;
+    }
+
+    .transactionDetails {
+        gap: 0.5rem;
+    }
+
+    .transactionType {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .primaryValue {
+        font-size: 1rem;
+    }
+
+    .statValue {
+        font-size: 1.5rem;
+    }
+
+    .sectionTitle {
+        font-size: 1.25rem;
+    }
+}

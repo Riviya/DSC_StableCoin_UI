@@ -5,6 +5,7 @@ import "./globals.css";
 import { ReactNode } from "react";
 import { Providers } from "./providers";
 import Navbar from "@/components/NavBar";
+import LayoutWrapper from '../components/LayoutWrapper';
 
 
 export const metadata: Metadata = {
@@ -13,14 +14,14 @@ export const metadata: Metadata = {
 
 };
 
-export default function RootLayout(props: { children: ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
         <Providers>
           <Navbar />
 
-          {props.children}
+          <LayoutWrapper>{children}</LayoutWrapper>
 
         </Providers>
       </body>

@@ -1,10 +1,9 @@
-specVersion: 1.3.0
-indexerHints:
-  prune: auto
+specVersion: 0.0.4
 schema:
   file: ./schema.graphql
+
 dataSources:
-  - kind: ethereum
+  - kind: ethereum/contract
     name: DSCEngine
     network: sepolia
     source:
@@ -13,11 +12,15 @@ dataSources:
       startBlock: 8748571
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.9
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - CollateralDeposited
-        - CollateralRedeemed
+        - CollateralDeposit
+        - CollateralRedemption
+        - User
+        - ProtocolStats
+        - MonthlyStats
+        - MonthlyActiveUser
       abis:
         - name: DSCEngine
           file: ./abis/DSCEngine.json
@@ -26,4 +29,31 @@ dataSources:
           handler: handleCollateralDeposited
         - event: CollateralRedeemed(indexed address,indexed address,uint256,indexed address)
           handler: handleCollateralRedeemed
-      file: ./src/dsc-engine.ts
+      file: ./src/dscEngine.ts
+
+  - kind: ethereum/contract
+    name: DSC
+    network: sepolia
+    source:
+      address: "0xB5Aaf885eA19e897dE253a47503127Be8BaDd466"
+      abi: DSC
+      startBlock: 8748571
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        # "Transfer" was removed from here - this was the cause of the error
+        - User
+        - Mint
+        - Burn
+        - ProtocolStats
+        - MonthlyStats
+        - MonthlyActiveUser
+      abis:
+        - name: DSC
+          file: ./abis/DSC.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/dsc.ts

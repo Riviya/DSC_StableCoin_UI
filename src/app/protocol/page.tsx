@@ -3,16 +3,17 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { BarChart3, PieChart, TrendingUp, DollarSign, Shield, Activity, Users, Lock } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart as RechartsPieChart, Cell, Pie } from 'recharts';
-import { DSCEngineABI } from '../../utils/DSCEngine';
-import { DSCEngineAddress, DSCAddress } from '@/utils/addresses';
+import { DSCAddress } from '@/utils/addresses';
 import { DSCABI } from '../../utils/DSCABI';
 import Config from "@/rainbowKitConfig";
 import { readContract } from '@wagmi/core'
 import { formatUnits } from 'viem'
 import { useAccount } from 'wagmi'
 import styles from '../stylings/Protocol.module.css';
-import { getTotalProtocolCollateral } from './getTotalCollateral';
-import { getTotalProtocolBurnedAmount } from './getTotalProtocolBurnedAmount ';
+import { fetchGraphProtocolData, getSupplyChartData } from './fetchGraphProtocolData';
+import { getEthPrice } from '../hooks/getEthPriceUSD';
+
+
 
 // --- TYPE DEFINITIONS ---
 interface ProtocolStats {
@@ -29,22 +30,6 @@ interface ChartDataPoint {
     color?: string; // For pie chart segments
 }
 
-// --- CONSTANTS ---
-const SUPPORTED_TOKENS = [
-    { symbol: 'WETH', name: 'Wrapped Ethereum', address: '0xdd13E55209Fd76AfE204dBda4007C227904f0a81', color: '#627EEA' },
-    { symbol: 'LINK', name: 'Chainlink', address: '0x779877A7B0D9E8603169DdbD7836e478b4624789', color: '#375BD2' }
-];
-
-// Sample data for charts
-const SAMPLE_SUPPLY_DATA: ChartDataPoint[] = [
-    { name: 'Jan', value: 1250000, date: '2024-01' },
-    { name: 'Feb', value: 1800000, date: '2024-02' },
-    { name: 'Mar', value: 2100000, date: '2024-03' },
-    { name: 'Apr', value: 2450000, date: '2024-04' },
-    { name: 'May', value: 2750000, date: '2024-05' },
-    { name: 'Jun', value: 3200000, date: '2024-06' },
-    { name: 'Jul', value: 3650000, date: '2024-07' }
-];
 
 const SAMPLE_COLLATERAL_DATA: ChartDataPoint[] = [
     { name: 'WETH', value: 65, color: '#627EEA' },
@@ -59,48 +44,67 @@ const Protocol: React.FC = () => {
 
     // State for live protocol data
     const [protocolStats, setProtocolStats] = useState<ProtocolStats>({
-        totalSupply: 'lo3',
-        totalCollateralValue: 'CALCULATING...',
-        totalBurned: 'CALCULATING...',
-        collateralizationRatio: '...'
+        totalSupply: '',
+        totalCollateralValue: '',
+        totalBurned: '',
+        collateralizationRatio: ''
     });
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [supplyData, setSupplyData] = useState<ChartDataPoint[]>(SAMPLE_SUPPLY_DATA);
+    const [supplyData, setSupplyData] = useState<ChartDataPoint[]>([]);
     const [collateralData, setCollateralData] = useState<ChartDataPoint[]>(SAMPLE_COLLATERAL_DATA);
 
     // --- DATA FETCHING ---
     const fetchProtocolData = useCallback(async () => {
-
         try {
             setIsLoading(true);
 
-            const totalProtocolCollateralUSD = await getTotalProtocolCollateral();
-            const totalCollateralFloat = parseFloat(totalProtocolCollateralUSD);
-            const totalBurned = await getTotalProtocolBurnedAmount();
+            // 🔁 Fetch from Subgraph
+            const protocolStats = await fetchGraphProtocolData();
+            const ethPriceUSD = await getEthPrice();
 
+            if (!protocolStats?.protocolStats) {
+                throw new Error('Missing protocol stats from subgraph');
+            }
 
+            const { totalCollateral, totalBurnVolume } = protocolStats.protocolStats;
+
+            const totalCollateralETH = totalCollateral
+                ? parseFloat(formatUnits(BigInt(totalCollateral), 18))
+                : 0;
+
+            const totalBurned = totalBurnVolume
+                ? parseFloat(formatUnits(BigInt(totalBurnVolume), 18))
+                : 0;
+
+            const collateralValueUSD = ethPriceUSD ? totalCollateralETH * ethPriceUSD : 0;
+
+            console.log('Collateral value in USD:', collateralValueUSD.toFixed(2));
+
+            // 🔁 Fetch Total Supply from Chain
             const totalSupply = await readContract(Config, {
                 abi: DSCABI,
                 address: DSCAddress as `0x${string}`,
                 functionName: 'totalSupply',
-                args: []
             });
 
             const formattedSupply = formatUnits(totalSupply as bigint, 18);
             const supplyFloat = parseFloat(formattedSupply);
 
-            const collateralizationRatio = supplyFloat > 0
-                ? ((totalCollateralFloat / supplyFloat) * 100).toFixed(2)
-                : '0.00';
+            const collateralizationRatio =
+                supplyFloat > 0
+                    ? ((collateralValueUSD / supplyFloat) * 100).toFixed(2)
+                    : '0.00';
 
             console.log('Total Supply:', formattedSupply);
+            console.log('Raw protocolStats:', protocolStats);
+            console.log('Raw totalCollateral:', protocolStats?.protocolStats.totalCollateral);
 
             setProtocolStats({
                 totalSupply: formattedSupply,
-                totalCollateralValue: totalProtocolCollateralUSD,
-                totalBurned: totalBurned,
-                collateralizationRatio: collateralizationRatio
+                totalCollateralValue: collateralValueUSD.toFixed(2), // store USD value
+                totalBurned: totalBurned.toString(),
+                collateralizationRatio,
             });
         } catch (error) {
             console.error('Error fetching protocol data:', error);
@@ -110,8 +114,19 @@ const Protocol: React.FC = () => {
     }, []);
 
 
+
     useEffect(() => {
-        fetchProtocolData();
+        const fetchData = async () => {
+            try {
+                const data = await getSupplyChartData('netMintVolume', 7);
+                setSupplyData(data);
+                await fetchProtocolData(); // Add await if fetchProtocolData is async
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
     }, [fetchProtocolData]);
 
     // --- UI HELPER FUNCTIONS ---

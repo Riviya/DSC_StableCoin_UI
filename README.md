@@ -12,4 +12,12 @@
  pnpm add @wagmi/core viem    //wagmi core
 
 
+ pnpm add -g @graphprotocol/graph-cli   // SUBGRAPHS
+
+
+ pnpm install graphql-request
+
+
+
+
 
