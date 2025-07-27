@@ -29,13 +29,17 @@
     }
   },
   "include": [
+    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
-    "next-env.d.ts",
-    "out/types/**/*.ts"
+    ".next/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "../dsc-protocol-subgraph",
+    "**/generated", // Also exclude any stray generated folders
+    "**/*.wasm", // AssemblyScript compiled artifacts (if any)
+    "**/*.graphql", // Optional: exclude if not needed in FE
+    "**/*.asm.ts" // AssemblyScript files
   ]
 }

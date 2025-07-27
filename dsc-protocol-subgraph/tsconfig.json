@@ -1,8 +1,0 @@
-// dsc-protocol-subgraph/tsconfig.json
-{
-  "extends": "../tsconfig.json",
-  "include": [
-    "src/dsc.ts",
-    "src/dscEngine.ts"
-  ]
-}
