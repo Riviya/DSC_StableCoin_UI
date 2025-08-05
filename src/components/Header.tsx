@@ -34,7 +34,7 @@ export default function Header({
                     </div>
                 </a>
                 <a
-                    href="https://github.com/Riviya?tab=repositories"
+                    href="https://github.com/Riviya/DSC_StableCoin_UI.git"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 transition-colors border border-zinc-700 cursor-pointer hidden md:block"

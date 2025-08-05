@@ -7,7 +7,7 @@
     height: 30vh;
     background: linear-gradient(200deg, #0202025d 10%, #000000 130%);
     color: white;
-    transition: width 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
     z-index: 1000;
     overflow: hidden;
     display: flex;
@@ -28,16 +28,10 @@
     list-style: none;
     padding: 0;
     margin: 0;
-    margin-top: 37px;
+    margin-top: 40px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-
-
-
-
-
-
+    gap: 12px;
 }
 
 .navItem {
@@ -50,8 +44,6 @@
     transition: background 0.3s, color 0.3s, box-shadow 0.3s;
     border-left: 3px solid transparent;
     height: 50px;
-
-
 }
 
 .navItem:hover {
@@ -81,38 +73,46 @@
     white-space: nowrap;
 }
 
-/* Responsive behavior */
+/* ========== MOBILE RESPONSIVENESS ========== */
 @media (max-width: 768px) {
     .navbar {
-        flex-direction: row;
-        height: auto;
-        width: 100vw;
         top: auto;
         bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100vw;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
         padding: 0.5rem 0;
-
+        border-radius: 20px 20px 0 0;
+        box-shadow: 0 -4px 12px rgba(31, 5, 182, 0.3);
     }
 
     .navList {
         flex-direction: row;
-        justify-content: space-around;
-        margin: 0 0 0 35%;
-        padding: 0;
+        justify-content: space-evenly;
         align-items: center;
+        width: 100%;
+        margin: 0;
+        padding: 0;
     }
 
     .navItem {
         flex-direction: column;
         gap: 4px;
-        padding: 8px;
+        padding: 6px 8px;
         border-left: none;
         border-top: 3px solid transparent;
+        height: auto;
+        font-size: 12px;
     }
 
     .active {
         border-top: 3px solid #1e90ff;
         border-left: none;
-        background-color: rgba(0, 100, 255, 0.2);
+        background-color: rgba(0, 100, 255, 0.15);
     }
 
     .collapsed,
@@ -122,5 +122,6 @@
 
     .label {
         font-size: 12px;
+        text-align: center;
     }
 }
